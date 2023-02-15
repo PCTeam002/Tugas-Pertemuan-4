@@ -6,16 +6,27 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     float xVal, vVal, zVal, jump, yBound, zBound;
+    private int maxJumps = 2;
+    private int jumpCount = 0;
+    private int score;
+    private int timer;
+
     public float speed;
     public float jumpForce;
     
+    private bool isGameOver;
+    private bool isGrounded;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI TimerText;
     Rigidbody rb;
     void Start()
     {
         yBound = 5;
         zBound = 4.5f;
         rb = GetComponent<Rigidbody>();
+        InvokeRepeating("UpdateScore", 1f, 0.5f);
+        InvokeRepeating("UpdateTimer", 1f, 1f);
     }
 
     // Update is called once per frame
@@ -25,12 +36,22 @@ public class PlayerController : MonoBehaviour
         xVal = Input.GetAxis("Horizontal");
         jump = Input.GetAxis("Jump");
 
+        if (isGrounded)
+        {
+            jumpCount = 0;
+        }
+
         //transform.position += new Vector3(zVal, jump, -xVal) * Time.deltaTime * 10;
         rb.AddForce(new Vector3(zVal, 0, -xVal) * speed);
-        if (Input.GetKeyDown(KeyCode.Space)){
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumps)
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+            jumpCount++;
+            Debug.Log("isground = " + isGrounded);
         }
         LimitBounds();
+        GameOver();
     }
     void LimitBounds()
     {
@@ -62,9 +83,35 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Obstacle"))
-        {
+        {   
             gameOverText.gameObject.SetActive(true);
             Debug.Log("GAMEOVER!");
+            isGameOver = true;
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            Debug.Log("isground = " + isGrounded);
+        }
+    }
+    void GameOver()
+    {
+        if (isGameOver)
+        {
+            Time.timeScale = 0;
+        }
+    }
+    void UpdateScore()
+    {
+        score += 10;
+        scoreText.text = "Score : " + score;
+    }
+    void UpdateTimer()
+    {
+        timer += 1;
+        TimerText.text = "Timer : " + timer;
     }
 }

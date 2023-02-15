@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zBound: 0
-  speed: 5
+  speed: 15
 --- !u!1 &5367367865921478431
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveObject : MonoBehaviour
 {
-    public float zBound = -15;
+    public float xBound = -10;
     public float speed = 5;
     void Start()
     {
@@ -16,7 +16,7 @@ public class MoveObject : MonoBehaviour
     {
         transform.Translate(Vector3.left * Time.deltaTime * speed);
 
-        if (transform.position.x < zBound && gameObject.CompareTag("Obstacle"))
+        if (transform.position.x < xBound && gameObject.CompareTag("Obstacle"))
         {
             Destroy(gameObject);
         }
