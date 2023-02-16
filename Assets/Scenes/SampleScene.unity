@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab57c1725a771c40b3c29d61dffb457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 15
   jumpForce: 50
   gameOverText: {fileID: 348260915}
   scoreText: {fileID: 755326348}

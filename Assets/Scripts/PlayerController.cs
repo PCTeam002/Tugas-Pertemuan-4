@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private int score;
     private int timer;
 
-    public float speed;
+    public float speed = 15.0f;
     public float jumpForce;
     
     private bool isGameOver;
